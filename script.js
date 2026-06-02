@@ -11,6 +11,7 @@ const departuresEl = document.getElementById("departures");
 const resultEl = document.getElementById("stationResult");
 const liveClockEl = document.getElementById("liveClock");
 const departureSearchInput = document.getElementById("departureSearchInput");
+const departureSearchBox = document.getElementById("departureSearchBox");
 const btnEnglish = document.getElementById("btnEnglish");
 const btnGerman = document.getElementById("btnGerman");
 
@@ -21,7 +22,6 @@ const translations = {
     nearestButton: "📍 Find nearest station",
     stationSearchPlaceholder: "Search Berlin station or stop...",
     searchButton: "Search",
-    showLabel: "Show:",
     filterAll: "All",
     filterSubway: "🚇 U-Bahn",
     filterSuburban: "🚆 S-Bahn",
@@ -30,7 +30,7 @@ const translations = {
     noStation: "No station selected",
     stationInfoDefault: "Select a station to see lines",
     waiting: "Waiting...",
-    departureSearchPlaceholder: "Search line, direction, bus number...",
+    departureSearchPlaceholder: "Search U-Bahn, S-Bahn, bus or tram number...",
     searching: "Searching...",
     noBerlinStation: "No Berlin station or stop found.",
     searchError: "Error searching station.",
@@ -54,12 +54,11 @@ const translations = {
     min: "min"
   },
   de: {
-    appTitle: "🚇 Berlin Verkehr",
+    appTitle: "🚇 Berlin Transit",
     appSubtitle: "U-Bahn, S-Bahn, Bus und Tram in Echtzeit",
     nearestButton: "📍 Nächste Station finden",
     stationSearchPlaceholder: "Berliner Station oder Haltestelle suchen...",
     searchButton: "Suchen",
-    showLabel: "Anzeigen:",
     filterAll: "Alle",
     filterSubway: "🚇 U-Bahn",
     filterSuburban: "🚆 S-Bahn",
@@ -68,7 +67,7 @@ const translations = {
     noStation: "Keine Station ausgewählt",
     stationInfoDefault: "Wähle eine Station, um Linien zu sehen",
     waiting: "Warten...",
-    departureSearchPlaceholder: "Linie, Richtung oder Busnummer suchen...",
+    departureSearchPlaceholder: "U-Bahn, S-Bahn, Bus oder Tramnummer suchen...",
     searching: "Suche...",
     noBerlinStation: "Keine Berliner Station oder Haltestelle gefunden.",
     searchError: "Fehler beim Suchen der Station.",
@@ -99,7 +98,6 @@ function t(key) {
 
 function setLanguage(language) {
   currentLanguage = language;
-
   document.documentElement.lang = language;
 
   btnEnglish.classList.toggle("active", language === "en");
@@ -177,7 +175,6 @@ function getDelayInfo(dep) {
 
   const actualTime = new Date(dep.when);
   const plannedTime = new Date(dep.plannedWhen);
-
   const delayMinutes = Math.round((actualTime - plannedTime) / 60000);
 
   if (delayMinutes <= 1) {
@@ -242,6 +239,9 @@ function selectStation(station) {
   stationNameEl.textContent = stationName;
   stationInfoEl.textContent = t("loadingStationLines");
   resultEl.innerHTML = "";
+
+  departureSearchBox.hidden = false;
+  departureSearchInput.value = "";
 
   loadDepartures();
 }

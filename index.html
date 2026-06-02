@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="image/logo.png" />
   <link rel="manifest" href="manifest.json" />
-  
 </head>
 <body>
 
@@ -37,7 +36,11 @@
     </button>
 
     <div class="search">
-      <input id="stationInput" data-i18n-placeholder="stationSearchPlaceholder" placeholder="Search Berlin station or stop..." />
+      <input
+        id="stationInput"
+        data-i18n-placeholder="stationSearchPlaceholder"
+        placeholder="Search Berlin station or stop..."
+      />
       <button onclick="searchStation()" data-i18n="searchButton">Search</button>
     </div>
   </div>
@@ -62,11 +65,11 @@
     <button class="refresh" onclick="loadDepartures()">↻</button>
   </div>
 
-  <div class="departure-search">
+  <div class="departure-search" id="departureSearchBox" hidden>
     <input
       id="departureSearchInput"
       data-i18n-placeholder="departureSearchPlaceholder"
-      placeholder="Search line, direction, bus number..."
+      placeholder="Search U-Bahn, S-Bahn, bus or tram number..."
       oninput="displayDepartures()"
     />
   </div>
