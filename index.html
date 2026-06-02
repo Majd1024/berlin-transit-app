@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berlin Transit Live</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+
+<div class="app">
+
+  <div class="top-bar">
+    <div>
+      <h1 data-i18n="appTitle">🚇 Berlin Transit Live</h1>
+      <p data-i18n="appSubtitle">Nearest U-Bahn, S-Bahn, bus and tram departures in real time</p>
+    </div>
+
+    <div class="top-tools">
+      <div class="language-switch">
+        <button id="btnEnglish" class="lang-btn active" onclick="setLanguage('en')">EN</button>
+        <button id="btnGerman" class="lang-btn" onclick="setLanguage('de')">DE</button>
+      </div>
+
+      <div class="clock-box">
+        <span id="liveClock">--:--:--</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-actions">
+    <button class="nearest-btn" onclick="findNearestStation()" data-i18n="nearestButton">
+      📍 Find nearest station
+    </button>
+
+    <div class="search">
+      <input id="stationInput" data-i18n-placeholder="stationSearchPlaceholder" placeholder="Search Berlin station or stop..." />
+      <button onclick="searchStation()" data-i18n="searchButton">Search</button>
+    </div>
+  </div>
+
+  <div id="stationResult"></div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('all', this)" data-i18n="filterAll">All</button>
+    <button class="filter-btn" onclick="setFilter('subway', this)" data-i18n="filterSubway">🚇 U-Bahn</button>
+    <button class="filter-btn" onclick="setFilter('suburban', this)" data-i18n="filterSuburban">🚆 S-Bahn</button>
+    <button class="filter-btn" onclick="setFilter('bus', this)" data-i18n="filterBus">🚌 Bus</button>
+    <button class="filter-btn" onclick="setFilter('tram', this)" data-i18n="filterTram">🚊 Tram</button>
+  </div>
+
+  <div class="station-header">
+    <div>
+      <h2 id="stationName" data-i18n="noStation">No station selected</h2>
+      <p id="stationInfo" data-i18n="stationInfoDefault">Select a station to see lines</p>
+      <p id="updated" data-i18n="waiting">Waiting...</p>
+    </div>
+
+    <button class="refresh" onclick="loadDepartures()">↻</button>
+  </div>
+
+  <div class="departure-search">
+    <input
+      id="departureSearchInput"
+      data-i18n-placeholder="departureSearchPlaceholder"
+      placeholder="Search line, direction, bus number..."
+      oninput="displayDepartures()"
+    />
+  </div>
+
+  <div id="departures"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
