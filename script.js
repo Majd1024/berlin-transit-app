@@ -3,6 +3,7 @@ let stationName = null;
 let currentFilter = "all";
 let currentLanguage = "en";
 let lastDepartures = [];
+let searchTimer = null;
 
 const stationNameEl = document.getElementById("stationName");
 const stationInfoEl = document.getElementById("stationInfo");
@@ -94,6 +95,15 @@ const translations = {
 
 function t(key) {
   return translations[currentLanguage][key];
+}
+
+function loadingSpinner(text) {
+  return `
+    <div class="spinner-wrap">
+      <div class="spinner"></div>
+      <span>${text}</span>
+    </div>
+  `;
 }
 
 function setLanguage(language) {
@@ -246,12 +256,27 @@ function selectStation(station) {
   loadDepartures();
 }
 
+function autoSearchStation() {
+  clearTimeout(searchTimer);
+
+  const query = document.getElementById("stationInput").value.trim();
+
+  if (query.length < 2) {
+    resultEl.innerHTML = "";
+    return;
+  }
+
+  searchTimer = setTimeout(() => {
+    searchStation();
+  }, 500);
+}
+
 async function searchStation() {
   const query = document.getElementById("stationInput").value.trim();
 
   if (!query) return;
 
-  resultEl.innerHTML = `<div class="loading">${t("searching")}</div>`;
+  resultEl.innerHTML = loadingSpinner(t("searching"));
 
   try {
     const res = await fetch(
@@ -294,8 +319,7 @@ function findNearestStation() {
     return;
   }
 
-  resultEl.innerHTML =
-    `<div class="loading">${t("findingNearest")}</div>`;
+  resultEl.innerHTML = loadingSpinner(t("findingNearest"));
 
   navigator.geolocation.getCurrentPosition(
     async (position) => {
@@ -344,8 +368,7 @@ function setFilter(filter, button) {
 async function loadDepartures() {
   if (!stationId) return;
 
-  departuresEl.innerHTML =
-    `<div class="loading">${t("loadingDepartures")}</div>`;
+  departuresEl.innerHTML = loadingSpinner(t("loadingDepartures"));
 
   try {
     const res = await fetch(
