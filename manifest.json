@@ -1,18 +1,20 @@
 {
-    "name": "Berlin Mobil",
-    "short_name": "Berlin Mobil",
-    "icons": [
-      {
-        "src": "logo.png",
-        "sizes": "192x192",
-        "type": "image/logo.png"
-      },
-      {
-        "src": "logo.png",
-        "sizes": "512x512",
-        "type": "image/logo.png"
-      }
-
-    ]
-  }
-  
+  "name": "Berlin Mobil",
+  "short_name": "Berlin Mobil",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5d28c",
+  "theme_color": "#f5d28c",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
