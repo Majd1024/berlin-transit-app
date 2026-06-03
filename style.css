@@ -133,17 +133,24 @@ body {
 }
 
 .install-btn {
-  grid-column: 1 / -1;
-  padding: 15px;
-  border-radius: 18px;
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9999;
+  padding: 13px 17px;
+  border-radius: 999px;
   background: #111827;
   color: white;
   font-size: 15px;
-  box-shadow: 0 0 18px rgba(255,255,255,0.25);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.35),
+    0 0 18px rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.25);
 }
 
 .install-btn:hover {
   background: #000000;
+  transform: translateY(-2px);
 }
 
 .station-option {
@@ -379,5 +386,12 @@ body {
   .time {
     font-size: 2.2rem;
     text-align: center;
+  }
+
+  .install-btn {
+    right: 12px;
+    bottom: 12px;
+    padding: 12px 15px;
+    font-size: 14px;
   }
 }
