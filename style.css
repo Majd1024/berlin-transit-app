@@ -96,7 +96,8 @@ body {
 .nearest-btn,
 .search button,
 .refresh,
-.filter-btn {
+.filter-btn,
+.install-btn {
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -129,6 +130,20 @@ body {
   padding: 15px 22px;
   border-radius: 18px;
   background: #ffd600;
+}
+
+.install-btn {
+  grid-column: 1 / -1;
+  padding: 15px;
+  border-radius: 18px;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  box-shadow: 0 0 18px rgba(255,255,255,0.25);
+}
+
+.install-btn:hover {
+  background: #000000;
 }
 
 .station-option {

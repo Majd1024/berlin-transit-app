@@ -4,6 +4,7 @@ let currentFilter = "all";
 let currentLanguage = "en";
 let lastDepartures = [];
 let searchTimer = null;
+let deferredInstallPrompt = null;
 
 const stationNameEl = document.getElementById("stationName");
 const stationInfoEl = document.getElementById("stationInfo");
@@ -15,6 +16,7 @@ const departureSearchInput = document.getElementById("departureSearchInput");
 const departureSearchBox = document.getElementById("departureSearchBox");
 const btnEnglish = document.getElementById("btnEnglish");
 const btnGerman = document.getElementById("btnGerman");
+const installBtn = document.getElementById("installBtn");
 
 const translations = {
   en: {
@@ -23,6 +25,7 @@ const translations = {
     nearestButton: "📍 Find nearest station",
     stationSearchPlaceholder: "Search Berlin station or stop...",
     searchButton: "Search",
+    installButton: "📲 Install Berlin Mobil",
     filterAll: "All",
     filterSubway: "🚇 U-Bahn",
     filterSuburban: "🚆 S-Bahn",
@@ -60,6 +63,7 @@ const translations = {
     nearestButton: "📍 Nächste Station finden",
     stationSearchPlaceholder: "Berliner Station oder Haltestelle suchen...",
     searchButton: "Suchen",
+    installButton: "📲 Berlin Mobil installieren",
     filterAll: "Alle",
     filterSubway: "🚇 U-Bahn",
     filterSuburban: "🚆 S-Bahn",
@@ -104,6 +108,59 @@ function loadingSpinner(text) {
       <span>${text}</span>
     </div>
   `;
+}
+
+function isAppInstalled() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function setupInstallButton() {
+  if (!installBtn) return;
+
+  if (isAppInstalled()) {
+    installBtn.hidden = true;
+  }
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+
+    if (isAppInstalled()) {
+      installBtn.hidden = true;
+      return;
+    }
+
+    deferredInstallPrompt = event;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) return;
+
+    deferredInstallPrompt.prompt();
+
+    await deferredInstallPrompt.userChoice;
+
+    deferredInstallPrompt = null;
+    installBtn.hidden = true;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    installBtn.hidden = true;
+  });
+}
+
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(() => {
+        console.log("Service worker registration failed.");
+      });
+    });
+  }
 }
 
 function setLanguage(language) {
@@ -488,4 +545,6 @@ setInterval(() => {
   }
 }, 1000);
 
+setupInstallButton();
+registerServiceWorker();
 setLanguage("en");
