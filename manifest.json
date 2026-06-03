@@ -2,19 +2,22 @@
   "name": "Berlin Mobil",
   "short_name": "Berlin Mobil",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f5d28c",
   "theme_color": "#f5d28c",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "/image/logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo.png",
+      "src": "/image/logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
