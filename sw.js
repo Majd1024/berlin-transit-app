@@ -1,4 +1,4 @@
-const CACHE_NAME = "berlin-mobil-v1";
+const CACHE_NAME = "berlin-mobil-v2";
 
 const FILES_TO_CACHE = [
   "/",
